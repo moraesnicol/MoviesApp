@@ -6,5 +6,7 @@ target 'MoviesApp' do
   use_frameworks!
 
   # Pods for MoviesApp
-
+  pod 'Alamofire'
+  pod 'Kingfisher', '~> 6.0'
+	 
 end
