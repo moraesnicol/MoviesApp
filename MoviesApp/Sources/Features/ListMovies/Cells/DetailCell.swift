@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Combine
 import Kingfisher
 
 
@@ -14,32 +13,25 @@ final class ListMovieCell: UITableViewCell {
     
     static let identifier = "ListMovieCell"
     
-    private var moviePoster = UIImageView()
-    private var movieTitle = UILabel()
-    private var movieSubTitle = UILabel()
-    
-    
-    private lazy var title: UILabel = {
+    private lazy var movieGenre: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = UIColor.white
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .left
-        label.numberOfLines = 1
+        label.textAlignment = .justified
+        label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
-        label.text = "Any Title"
         return label
     }()
     
     private lazy var subTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = UIColor.white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
-        label.text = "Any SubTitle"
         return label
     }()
     
@@ -49,7 +41,6 @@ final class ListMovieCell: UITableViewCell {
         image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
-        image.image = UIImage.placeHolderImage
         return image
     }()
     
@@ -63,8 +54,9 @@ final class ListMovieCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutIfNeeded()
+          super.layoutSubviews()
+          let margins = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
+          contentView.frame = contentView.frame.inset(by: margins)
     }
     
     override func prepareForReuse() {
@@ -73,33 +65,71 @@ final class ListMovieCell: UITableViewCell {
         imagePoster.kf.cancelDownloadTask()
     }
     
+    func fetchMovie(movie: Movie) {
+        let poster: String? = movie.poster ?? ""
+        let baseUrl = "https://image.tmdb.org/t/p/w300\(poster!)"
+        let imagePlaceHolder = UIImageView()
+        imagePlaceHolder.contentMode = .scaleAspectFit
+        imagePlaceHolder.image = .placeHolderImage
+        
+        DispatchQueue.main.async {
+            guard let url = URL(string: baseUrl ) else { return }
+            let resource = ImageResource(downloadURL: url, cacheKey: movie.poster)
+            let placeholder = imagePlaceHolder.image
+            self.imagePoster.kf.setImage(with: resource, placeholder: placeholder)
+
+            if let titleOptional = movie.releaseDate{
+                let titleMovie = titleOptional
+                
+                let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                let date = dateFormatter.date(from: titleMovie)
+                
+                dateFormatter.dateFormat = "yyyy"
+                    let dateString = dateFormatter.string(from: date!)
+          
+                self.movieGenre.text = dateString
+                
+            }
+            
+            if let titleOriginalOptional = movie.originalTitle {
+                let titleOriginal = titleOriginalOptional
+                self.subTitle.text = titleOriginal
+            }
+        }
+    }
 }
+
 
 extension ListMovieCell: ViewCode {
     
     func setupComponents() {
         contentView.addSubview(imagePoster)
-        contentView.addSubview(title)
+        contentView.addSubview(movieGenre)
         contentView.addSubview(subTitle)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            imagePoster.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            imagePoster.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            imagePoster.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imagePoster.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imagePoster.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             
             imagePoster.heightAnchor.constraint(equalToConstant: 190),
             imagePoster.widthAnchor.constraint(equalToConstant: 190),
 
-            title.topAnchor.constraint(equalTo: imagePoster.topAnchor, constant: 50),
-            title.leadingAnchor.constraint(equalTo: imagePoster.leadingAnchor, constant: 10),
-            title.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-    
-            subTitle.topAnchor.constraint(equalTo: title.topAnchor, constant: 5),
-            subTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            subTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            subTitle.leadingAnchor.constraint(equalTo: imagePoster.trailingAnchor, constant: 2),
+            subTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            subTitle.centerYAnchor.constraint(equalTo: imagePoster.centerYAnchor),
+            
+            movieGenre.topAnchor.constraint(equalTo: subTitle.topAnchor, constant: 40),
+            movieGenre.leadingAnchor.constraint(equalTo: imagePoster.trailingAnchor, constant: 2),
+            movieGenre.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
         ])
     }
     
+    func setupExtraConfiguration() {
+        selectionStyle = .none
+        backgroundColor = .secondary
+    }
 }

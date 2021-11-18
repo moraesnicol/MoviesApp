@@ -13,6 +13,7 @@
 		C02D26C82745F1B4008C7BED /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02D26C72745F1B4008C7BED /* ViewCode.swift */; };
 		C02D26CB2745F22C008C7BED /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02D26CA2745F22C008C7BED /* DetailCell.swift */; };
 		C02D26CD2745F620008C7BED /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02D26CC2745F620008C7BED /* UIImage+Extension.swift */; };
+		C02D26D0274602C4008C7BED /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02D26CF274602C3008C7BED /* APIService.swift */; };
 		C0FCE5B02745E075006548D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FCE5AF2745E075006548D2 /* AppDelegate.swift */; };
 		C0FCE5B22745E075006548D2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FCE5B12745E075006548D2 /* SceneDelegate.swift */; };
 		C0FCE5B42745E075006548D2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FCE5B32745E075006548D2 /* DetailViewController.swift */; };
@@ -29,6 +30,7 @@
 		C02D26C72745F1B4008C7BED /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
 		C02D26CA2745F22C008C7BED /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
 		C02D26CC2745F620008C7BED /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		C02D26CF274602C3008C7BED /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		C0FCE5AC2745E075006548D2 /* MoviesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0FCE5AF2745E075006548D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0FCE5B12745E075006548D2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 		C02D26BF2745E733008C7BED /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				C02D26CE27460297008C7BED /* APIService */,
 				C02D26C62745F19A008C7BED /* Components */,
 				C02D26C32745F100008C7BED /* Model */,
 				C02D26C02745E778008C7BED /* Extensions */,
@@ -143,6 +146,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		C02D26CE27460297008C7BED /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				C02D26CF274602C3008C7BED /* APIService.swift */,
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
 		C0FCE5A32745E075006548D2 = {
 			isa = PBXGroup;
 			children = (
@@ -180,7 +191,6 @@
 				52A86ECA01C6C408F6510128 /* Pods-MoviesApp.debug.xcconfig */,
 				4873DB3692C9317A66D6685E /* Pods-MoviesApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -305,6 +315,7 @@
 				C0FCE5B22745E075006548D2 /* SceneDelegate.swift in Sources */,
 				C02D26C22745E790008C7BED /* UIColor+Extension.swift in Sources */,
 				C02D26CB2745F22C008C7BED /* DetailCell.swift in Sources */,
+				C02D26D0274602C4008C7BED /* APIService.swift in Sources */,
 				C02D26C82745F1B4008C7BED /* ViewCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
